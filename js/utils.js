@@ -15,71 +15,15 @@ function $(selector) {
  * PARTIE CONSTANTES
  *********************************************************************************/
 
-/**
- * Référence à l'élément HTML avec l'ID "accessibilityPanel".
- * @type {Element}
- */
-const accessibilityPanel = $("#accessibilityPanel");
-
-/**
- * Référence au nom de la variable en LocalStorage.
- * @type {string}
- */
-const accessibilityStorageName = "accessibility";
-
+class Config {
+    static accessibilityPanel = $("#accessibilityPanel");
+    static accessibilityStorageName = "accessibility";
+}
 
 /**
  * Classe contenant les références aux éléments HTML liés aux paramètres d'accessibilité.
  */
 class Buttons {
-    /**
-     * Bouton pour diminuer la taille de police.
-     * @type {Element}
-     */
-    static fontSizeDecrease = $("#fontSizeDecreaseButton");
-
-    /**
-     * Bouton pour augmenter la taille de police.
-     * @type {Element}
-     */
-    static fontSizeIncrease = $("#fontSizeIncreaseButton");
-
-    /**
-     * Bouton pour diminuer la hauteur de ligne.
-     * @type {Element}
-     */
-    static lineHeightDecrease = $("#lineHeightDecreaseButton");
-
-    /**
-     * Bouton pour augmenter la hauteur de ligne.
-     * @type {Element}
-     */
-    static lineHeightIncrease = $("#lineHeightIncreaseButton");
-
-    /**
-     * Bouton pour diminuer l'espacement des lettres.
-     * @type {Element}
-     */
-    static letterSpacingDecrease = $("#letterSpacingDecreaseButton");
-
-    /**
-     * Bouton pour augmenter l'espacement des lettres.
-     * @type {Element}
-     */
-    static letterSpacingIncrease = $("#letterSpacingIncreaseButton");
-
-    /**
-     * Bouton pour diminuer l'espacement des mots.
-     * @type {Element}
-     */
-    static wordSpacingDecrease = $("#wordSpacingDecreaseButton");
-
-    /**
-     * Bouton pour augmenter l'espacement des mots.
-     * @type {Element}
-     */
-    static wordSpacingIncrease = $("#wordSpacingIncreaseButton");
-
     /**
      * Select pour choisir la famille de polices.
      * @type {Element}
@@ -91,30 +35,6 @@ class Buttons {
  * Classe contenant les propriétés CSS liées aux paramètres d'accessibilité.
  */
 class Properties {
-    /**
-     * Propriété CSS pour la taille de police.
-     * @type {string}
-     */
-    static fontSize = "--font-size";
-
-    /**
-     * Propriété CSS pour la hauteur de ligne.
-     * @type {string}
-     */
-    static lineHeight = "--line-height";
-
-    /**
-     * Propriété CSS pour l'espacement des lettres.
-     * @type {string}
-     */
-    static letterSpacing = "--letter-spacing";
-
-    /**
-     * Propriété CSS pour l'espacement des mots.
-     * @type {string}
-     */
-    static wordSpacing = "--word-spacing";
-
     /**
      * Propriété CSS pour la famille de polices.
      * @type {string}
