@@ -1,0 +1,103 @@
+/****************************
+ * Mise en page générale 
+ ****************************/
+
+ body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.accessibility {
+  width: 45%;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.text {
+  width: 55%;
+  background-color: antiquewhite;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.panel {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 128, 0, 0.25);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.panel p {
+  font-size: 20px;
+}
+
+.panel .buttons {
+  display: flex;
+}
+
+.panel button {
+  background-color: rgb(0, 128, 0);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+/****************************
+* Variables accessibilité
+****************************/
+
+:root {
+  --font-size: 16px;
+  --line-height: 1.1;
+  --letter-spacing: 0;
+  --font-family-text: "Lucida Sans";
+
+  --text-100: hsl(0, 60%, 10%);
+  --text-90: hsl(0, 60%, 20%);
+  --text-80: hsl(0, 60%, 30%);
+  --text-70: hsl(0, 60%, 40%);
+
+  --bg-100: hsl(205, 40%, 40%);
+  --bg-90: hsl(205, 40%, 50%);
+  --bg-80: hsl(205, 40%, 60%);
+  --bg-70: hsl(205, 40%, 70%);
+}
+
+
+/****************************
+* Mise en page accessibilité
+****************************/
+
+
+.acc-font-size {
+  font-size: var(--font-size);
+}
+
+.acc-letter-spacing {
+  letter-spacing: var(--letter-spacing);
+}
+
+.acc-line-height {
+  line-height: var(--line-height);
+}
