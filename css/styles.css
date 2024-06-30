@@ -106,18 +106,27 @@ body {
     display: flex;
 }
 
-.panel button {
+.panel button, .panel select {
     background-color: rgb(0, 128, 0);
     color: white;
     border: none;
     padding: 5px 10px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.panel button {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.panel select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 
@@ -129,7 +138,7 @@ body {
     --font-size: 16px;
     --line-height: 1.1;
     --letter-spacing: 0;
-    --font-family-text: "Lucida Sans";
+    --font-family: "Lucida Sans";
     --word-spacing: 0.25em;
 
     --text-100: hsl(0, 60%, 10%);
@@ -154,4 +163,5 @@ body {
     letter-spacing: var(--letter-spacing);
     line-height: var(--line-height);
     word-spacing: var(--word-spacing);
+    font-family: var(--font-family), serif;
 }
