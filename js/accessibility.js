@@ -7,17 +7,21 @@ class Button {
     static fontSizeDecrease = $("#fontSizeDecreaseButton");
     static fontSizeIncrease = $("#fontSizeIncreaseButton");
 
-    static letterSpacingDecrease = $("#letterSpacingDecreaseButton");
-    static letterSpacingIncrease = $("#letterSpacingIncreaseButton");
-    
     static lineHeightDecrease = $("#lineHeightDecreaseButton");
     static lineHeightIncrease = $("#lineHeightIncreaseButton");
+
+    static letterSpacingDecrease = $("#letterSpacingDecreaseButton");
+    static letterSpacingIncrease = $("#letterSpacingIncreaseButton");
+
+    static wordSpacingDecrease = $("#wordSpacingDecreaseButton");
+    static wordSpacingIncrease = $("#wordSpacingIncreaseButton");
 }
 
 class Property {
     static fontSize = "--font-size";
-    static letterSpacing = "--letter-spacing";
     static lineHeight = "--line-height";
+    static letterSpacing = "--letter-spacing";
+    static wordSpacing = "--word-spacing";
 }
 
 
@@ -28,6 +32,7 @@ class Property {
  * @param {string} [unit='px'] - L'unité de la valeur d'ajustement (par défaut : 'px').
  */
 function adjustRoot(property, adjustment, unit = 'px') {
+    console.log(property, adjustment, unit);
     const root = document.documentElement;
     root.style.setProperty(property, `${parseFloat(getComputedStyle(root).getPropertyValue(property)) + adjustment}${unit}`);
 }
@@ -53,6 +58,15 @@ function initializeFontSize() {
 }
 
 /**
+ * Initialise l'ajustement de la hauteur de ligne.
+ * Ajoute des écouteurs d'événement 'click' aux boutons de diminution et d'augmentation de la hauteur de ligne.
+ */
+function initializeLineHeight() {
+    addEventButton(Button.lineHeightDecrease, Property.lineHeight, -0.1, "");
+    addEventButton(Button.lineHeightIncrease, Property.lineHeight,  0.1, "");
+}
+
+/**
  * Initialise l'ajustement de l'espacement des lettres.
  * Ajoute des écouteurs d'événement 'click' aux boutons de diminution et d'augmentation de l'espacement des lettres.
  */
@@ -61,13 +75,17 @@ function initializeLetterSpacing() {
     addEventButton(Button.letterSpacingIncrease, Property.letterSpacing,  0.05, 'em');
 }
 
-function initializeLineHeight() {
-    addEventButton(Button.lineHeightDecrease, Property.lineHeight, -0.1, "");
-    addEventButton(Button.lineHeightIncrease, Property.lineHeight,  0.1, "");
+/**
+ * Initialise l'ajustement de l'espacement des mots.
+ * Ajoute des écouteurs d'événement 'click' aux boutons de diminution et d'augmentation de l'espacement des mots.
+ */
+function initializeWordSpacing() {
+    addEventButton(Button.wordSpacingDecrease, Property.wordSpacing, -0.1, 'em');
+    addEventButton(Button.wordSpacingIncrease, Property.wordSpacing,  0.1, 'em');
 }
-
 
 
 initializeFontSize();
 initializeLetterSpacing();
 initializeLineHeight();
+initializeWordSpacing();

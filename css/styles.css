@@ -72,6 +72,7 @@
   --line-height: 1.1;
   --letter-spacing: 0;
   --font-family-text: "Lucida Sans";
+  --word-spacing: 0.25em;
 
   --text-100: hsl(0, 60%, 10%);
   --text-90: hsl(0, 60%, 20%);
@@ -90,14 +91,9 @@
 ****************************/
 
 
-.acc-font-size {
+.acc {
   font-size: var(--font-size);
-}
-
-.acc-letter-spacing {
   letter-spacing: var(--letter-spacing);
-}
-
-.acc-line-height {
   line-height: var(--line-height);
+  word-spacing: var(--word-spacing);
 }
