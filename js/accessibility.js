@@ -1,11 +1,3 @@
-import {
-    Buttons,
-    Properties,
-    fontFamilies,
-    accessibilityPanel,
-    accessibilityStorageName
-} from "./utils";
-
 /*********************************************************************************
  * PARTIE CHARGEMENT
  *********************************************************************************/
@@ -95,7 +87,16 @@ function adjustRoot(cssProperty, adjustmentValue, unit = "px") {
  */
 function addEventButton(element, property, value, unit = 'px'
 ) {
-    element.addEventListener("click", () => adjustRoot(property, value, unit));
+    element.addEventListener("click", () => {
+        adjustRoot(property, value, unit);
+        // Ajouter la classe 'animate' au bouton cliqué
+        element.classList.add('animate');
+
+        // Retirer la classe 'animate' après 300 millisecondes (durée de l'animation)
+        setTimeout(() => {
+            element.classList.remove('animate');
+        }, 300);
+    });
 }
 
 /**

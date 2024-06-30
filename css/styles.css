@@ -56,44 +56,108 @@
  ****************************/
 
 body {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: nowrap;
-    padding-top: 80px; /* Espace pour le menu */
+    margin: 0;
+    padding: 80px 20px 20px; /* Espace pour le menu fixe en haut */
     background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
 }
 
 .accessibility {
-    width: 45%;
-    padding: 20px;
-    border-radius: 5px;
+    width: 100%;
+    max-width: 1200px;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .text {
-    width: 55%;
     background-color: antiquewhite;
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .panel {
-    height: 100px;
-    width: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-height: 100px;
     background-color: rgba(0, 128, 0, 0.25);
     padding: 0.5rem;
     border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mode portable (par défaut) */
+.accessibility {
+    flex-direction: column;
+}
+
+.panel {
+    width: 100%;
+}
+
+/* Mode tablette */
+@media screen and (min-width: 500px) {
+    .accessibility {
+        flex-direction: column;
+    }
+
+    .panel {
+        width: calc(50% - 10px); /* Deux panels de largeur */
+    }
+
+    .accessibility {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .accessibility {
+        flex-direction: column;
+    }
+
+    .panel {
+        width: calc(32% - 10px); /* Deux panels de largeur */
+    }
+
+    .accessibility {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+
+/* Mode desktop */
+@media screen and (min-width: 1024px) {
+    body {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .accessibility, .text {
+        width: calc(50% - 20px);
+    }
+
+    .accessibility {
+        order: 1;
+    }
+
+    .text {
+        order: 2;
+    }
+
+    .panel {
+        width: calc(50% - 10px); /* Maintient deux panels de largeur */
+    }
 }
 
 .panel p {
@@ -127,6 +191,10 @@ body {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+.panel button.animate {
+    transform: scale(0.95);
 }
 
 

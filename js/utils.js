@@ -7,7 +7,7 @@
  * @param {string} selector - Le sélecteur CSS de l'élément à sélectionner.
  * @returns {Element} L'élément correspondant au sélecteur.
  */
-export function $(selector) {
+function $(selector) {
     return document.querySelector(selector);
 }
 
@@ -19,20 +19,19 @@ export function $(selector) {
  * Référence à l'élément HTML avec l'ID "accessibilityPanel".
  * @type {Element}
  */
-export const accessibilityPanel = $("#accessibilityPanel");
+const accessibilityPanel = $("#accessibilityPanel");
 
 /**
  * Référence au nom de la variable en LocalStorage.
  * @type {string}
  */
-export const accessibilityStorageName = "accessibility";
-
+const accessibilityStorageName = "accessibility";
 
 
 /**
  * Classe contenant les références aux éléments HTML liés aux paramètres d'accessibilité.
  */
-export class Buttons {
+class Buttons {
     /**
      * Bouton pour diminuer la taille de police.
      * @type {Element}
@@ -91,7 +90,7 @@ export class Buttons {
 /**
  * Classe contenant les propriétés CSS liées aux paramètres d'accessibilité.
  */
-export class Properties {
+class Properties {
     /**
      * Propriété CSS pour la taille de police.
      * @type {string}
@@ -127,7 +126,7 @@ export class Properties {
  * Tableau des familles de polices disponibles.
  * @type {string[]}
  */
-export const fontFamilies = [
+const fontFamilies = [
     "Times New Roman",
     "Arial",
     "Verdana",
