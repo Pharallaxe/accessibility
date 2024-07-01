@@ -208,16 +208,18 @@ body {
     --letter-spacing: 0;
     --font-family: "Lucida Sans";
     --word-spacing: 0.25em;
+    --margin : 0px;
+    --padding : 0px;
 
-    --text-100: hsl(0, 60%, 10%);
-    --text-90: hsl(0, 60%, 20%);
-    --text-80: hsl(0, 60%, 30%);
-    --text-70: hsl(0, 60%, 40%);
+    /*--text-100: hsl(0, 60%, 10%);*/
+    /*--text-90: hsl(0, 60%, 20%);*/
+    /*--text-80: hsl(0, 60%, 30%);*/
+    /*--text-70: hsl(0, 60%, 40%);*/
 
-    --bg-100: hsl(205, 40%, 40%);
-    --bg-90: hsl(205, 40%, 50%);
-    --bg-80: hsl(205, 40%, 60%);
-    --bg-70: hsl(205, 40%, 70%);
+    /*--bg-100: hsl(205, 40%, 40%);*/
+    /*--bg-90: hsl(205, 40%, 50%);*/
+    /*--bg-80: hsl(205, 40%, 60%);*/
+    /*--bg-70: hsl(205, 40%, 70%);*/
 }
 
 
@@ -232,4 +234,6 @@ body {
     line-height: var(--line-height);
     word-spacing: var(--word-spacing);
     font-family: var(--font-family), serif;
+    margin: var(--margin);
+    padding: var(--padding);
 }

@@ -1,4 +1,45 @@
 /*********************************************************************************
+ * PARTIE OUTILS
+ *********************************************************************************/
+
+// Fonction pour créer les objets CssSimpleProperty
+function createCssSimpleProperties(cssProperties) {
+    cssProperties.forEach(property => {
+        new CssSimpleProperty(property[0], property[1], property[2],
+        )
+    });
+}
+
+/**
+ * Fonction utilitaire pour sélectionner un élément du DOM.
+ * @param {string} selector - Le sélecteur CSS de l'élément à sélectionner.
+ * @returns {Element} L'élément correspondant au sélecteur.
+ */
+function $(selector) {
+    return document.querySelector(selector);
+}
+
+/*********************************************************************************
+ * PARTIE CONSTANTES
+ *********************************************************************************/
+
+class Config {
+    static accessibilityPanel = $("#accessibilityPanel");
+    static accessibilityStorageName = "accessibility";
+}
+
+
+const CSS_PROPERTIES = [
+    ["--font-size",         2,   "px"], // fontSize{In-Decrease}Button
+    ["--line-height",     0.1,     ""], // lineHeight{In-Decrease}Button
+    ["--letter-spacing", 0.05,   "em"], // letterSpacing{In-Decrease}Button
+    ["--word-spacing",    0.1,   "em"], // wordSpacing{In-Decrease}Button
+    ["--margin",            5,   "px"], // margin{In-Decrease}Button
+    ["--padding",            5,   "px"], // margin{In-Decrease}Button
+];
+
+
+/*********************************************************************************
  * PARTIE ENREGISTREMENT
  *********************************************************************************/
 
@@ -24,34 +65,77 @@ class CssProperty {
         this.#propertyName = propertyName;
     }
 
-    getPropertyName() { return this.#propertyName; }
+    getPropertyName() {
+        return this.#propertyName;
+    }
 }
 
 class CssSimpleProperty extends CssProperty {
-    #value;
+        #value;
     #unit;
-    #decreaseButton;
-    #increaseButton;
     #delayAnimation;
     #classAnimation;
+    #decreaseButton;
+    #increaseButton;
 
-    constructor(propertyName, value, unit= "px", decreaseButtonSelector, increaseButtonSelector) {
+    constructor(propertyName, value, unit = "px") {
         super(propertyName);
         this.#value = value;
         this.#unit = unit;
-        this.#decreaseButton = $(decreaseButtonSelector);
-        this.#increaseButton = $(increaseButtonSelector);
+        this.getCssPropertyButtons(propertyName)
         this.#delayAnimation = 300;
         this.#classAnimation = "animate";
         this.#initialize();
     }
 
-    getValue() { return this.#value; }
-    getUnit() { return this.#unit; }
-    getDecreaseButton() { return this.#decreaseButton; }
-    getIncreaseButton() { return this.#increaseButton; }
-    getDelayAnimation() { return this.#delayAnimation; }
-    getClassAnimation() { return this.#classAnimation; }
+    getValue() {
+        return this.#value;
+    }
+
+    getUnit() {
+        return this.#unit;
+    }
+
+    getDecreaseButton() {
+        return this.#decreaseButton;
+    }
+
+    setDecreaseButton(value) {
+        this.#decreaseButton = $(value);
+    }
+
+    getIncreaseButton() {
+        return this.#increaseButton;
+    }
+
+    setIncreaseButton(value) {
+        this.#increaseButton = $(value);
+    }
+
+    getDelayAnimation() {
+        return this.#delayAnimation;
+    }
+
+    getClassAnimation() {
+        return this.#classAnimation;
+    }
+
+    getCssPropertyButtons(cssProperty) {
+
+        // Récupérer les termes de la propriété
+        const parts = cssProperty.split('-').slice(2);
+
+        // Construire le préfixe en camelCase.
+        const buttonPrefix =
+            parts[0] +
+            parts
+                .slice(1)
+                .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+                .join('');
+
+        this.setDecreaseButton(`#${buttonPrefix}DecreaseButton`);
+        this.setIncreaseButton(`#${buttonPrefix}IncreaseButton`);
+    }
 
     /**
      * Initialise l'ajustement de la propriété CSS.
@@ -87,70 +171,6 @@ class CssSimpleProperty extends CssProperty {
     }
 }
 
-/**
- La classe LineHeight est une sous-classe de la classe CssProperty et représente une
- propriété CSS pour contrôler la hauteur de ligne du texte.
- */
-class LineHeight extends CssSimpleProperty {
-    constructor() {
-        super(
-            "--line-height",
-            0.1,
-            "",
-            "#lineHeightDecreaseButton",
-            "#lineHeightIncreaseButton"
-        );
-    }
-}
-
-/**
- La classe FontSize est une sous-classe de la classe CssProperty et représente une
- propriété CSS pour contrôler la taille de police du texte.
- */
-class FontSize extends CssSimpleProperty {
-    constructor() {
-        super(
-            "--font-size",
-            2,
-            "px",
-            "#fontSizeDecreaseButton",
-            "#fontSizeIncreaseButton"
-        );
-    }
-}
-
-/**
- La classe LetterSpacing est une sous-classe de la classe CssProperty et représente
- une propriété CSS pour contrôler l'espacement des lettres du texte.
- */
-class LetterSpacing extends CssSimpleProperty {
-    constructor() {
-        super(
-            "--letter-spacing",
-            0.05,
-            "em",
-            "#letterSpacingDecreaseButton",
-            "#letterSpacingIncreaseButton"
-        );
-    }
-}
-
-/**
- La classe WordSpacing est une sous-classe de la classe CssProperty et représente une
- propriété CSS pour contrôler l'espacement des mots du texte.
- */
-class WordSpacing extends CssSimpleProperty {
-    constructor() {
-        super(
-            "--word-spacing",
-            0.1,
-            "em",
-            "#wordSpacingDecreaseButton",
-            "#wordSpacingIncreaseButton"
-        );
-    }
-}
-
 class FontFamily {
     #fontFamilySelect;
     #propertyName;
@@ -172,9 +192,17 @@ class FontFamily {
         ];
     }
 
-    getFontFamilySelect() { return this.#fontFamilySelect }
-    getPropertyName() { return this.#propertyName }
-    getFontFamilies() { return this.#fontFamilies}
+    getFontFamilySelect() {
+        return this.#fontFamilySelect
+    }
+
+    getPropertyName() {
+        return this.#propertyName
+    }
+
+    getFontFamilies() {
+        return this.#fontFamilies
+    }
 
     /**
      * Initialise l'événement 'change' sur le select de la famille de polices.
@@ -237,10 +265,8 @@ function readAccessibilitySettings() {
 
     // Gérer la création du panel font-family
     if (Config.accessibilityPanel) {
-        new FontSize();
-        new LineHeight();
-        new LetterSpacing();
-        new WordSpacing();
+
+        createCssSimpleProperties(CSS_PROPERTIES);
 
         const fontFamilySelect = new FontFamily();
         fontFamilySelect.initialize()
