@@ -22,41 +22,49 @@
 
 <div class="party accessibility" id="accessibilityPanel">
 
-    <div class="panel font-size">
-        <p>Taille de police</p>
-        <div class="buttons font-size-buttons">
-            <button id="fontSizeDecreaseButton">-</button>
-            <button id="fontSizeIncreaseButton">+</button>
+    <div class="panel">
+        <p>Taille titre</p>
+        <div class="buttons">
+            <button id="fontSizeTitleDecreaseButton">-</button>
+            <button id="fontSizeTitleIncreaseButton">+</button>
         </div>
     </div>
 
-    <div class="panel line-height">
+    <div class="panel">
+        <p>Taille text</p>
+        <div class="buttons">
+            <button id="fontSizeTextDecreaseButton">-</button>
+            <button id="fontSizeTextIncreaseButton">+</button>
+        </div>
+    </div>
+
+    <div class="panel">
         <p>Hauteur de police</p>
-        <div class="buttons line-height-buttons">
+        <div class="buttons">
             <button id="lineHeightDecreaseButton">-</button>
             <button id="lineHeightIncreaseButton">+</button>
         </div>
     </div>
 
-    <div class="panel letter-spacing">
+    <div class="panel">
         <p>Espace des lettres</p>
-        <div class="buttons letter-spacing-buttons">
+        <div class="buttons">
             <button id="letterSpacingDecreaseButton">-</button>
             <button id="letterSpacingIncreaseButton">+</button>
         </div>
     </div>
 
-    <div class="panel line-height">
+    <div class="panel">
         <p>Espace des mots</p>
-        <div class="buttons line-height-buttons">
+        <div class="buttons">
             <button id="wordSpacingDecreaseButton">-</button>
             <button id="wordSpacingIncreaseButton">+</button>
         </div>
     </div>
 
-    <div class="panel margin">
+    <div class="panel">
         <p>Margin</p>
-        <div class="buttons margin-buttons">
+        <div class="buttons">
             <button id="marginDecreaseButton">-</button>
             <button id="marginIncreaseButton">+</button>
         </div>
@@ -64,15 +72,30 @@
 
     <div class="panel padding">
         <p>Padding</p>
-        <div class="buttons padding-buttons">
+        <div class="buttons">
             <button id="paddingDecreaseButton">-</button>
             <button id="paddingIncreaseButton">+</button>
+        </div>
+    </div>
+
+    <div class="panel border-radius">
+        <p>Border Radius</p>
+        <div class="buttons">
+            <button id="borderRadiusDecreaseButton">-</button>
+            <button id="borderRadiusIncreaseButton">+</button>
         </div>
     </div>
 
     <div class="panel font-size">
         <p>Police</p>
         <select id="fontFamilySelect" class="font-family-select"></select>
+    </div>
+
+    <div class="panel read-guide">
+        <p>Guide de lecture</p>
+        <div class="buttons">
+            <button id="readGuideButton">Cliquez ici</button>
+        </div>
     </div>
 
     <div class="panel rest">
@@ -88,39 +111,42 @@
 
 
 <div class="party text">
-    <div class="exemple acc">
-        <p class="acc1">Titre principal</p>
-        <p id="textField">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut risus in augue luctus
-            venenatis. Sed
-            tincidunt, magna a ultricies accumsan, mi enim tempor nulla, eget malesuada magna nisl ut lacus. Aliquam
-            lobortis. Aliquam lobortis. Suspendisse potenti. Ut fringilla. Suspendisse potenti. Ut fringilla.</p>
-        <h2>Sous-titre 1</h2>
-        <p>Cras commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur pede. Fusce
-            tellus odio, dapibus id fermentum quis, suscipit id erat. Nullam quis ante. Etiam sit amet orci eget
-            eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed
-            consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>
-        <h3>Sous-sous-titre 1</h3>
-        <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet
-            a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.
-            Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+    <div id="readGuideContainer">
+
+    </div>
+    <div class="exemple acc-body">
+        <p class="acc-titre">Titre 1</p>
+        <p class="acc-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut risus in augue luctus
+            venenatis. Sed tincidunt, magna a ultricies accumsan, mi enim tempor nulla, eget malesuada magna nisl ut
+            lacus. Aliquam lobortis. Aliquam lobortis. Suspendisse potenti. Ut fringilla. Suspendisse potenti. Ut
+            fringilla.</p>
+        <p class="acc-titre">Titre 2</p>
+        <p class="acc-text">Cras commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur
+            pede. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat. Nullam quis ante. Etiam sit amet orci
+            eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+            Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>
+        <p class="acc-titre">Titre 3</p>
+        <p class="acc-text">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus
+            ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras
+            dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
             consequat vitae, eleifend ac, enim.</p>
         <button class="btn-action">Cliquez ici</button>
-        <h2>Sous-titre 2</h2>
-        <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius
-            laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-            ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam
-            semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-        <h3>Sous-sous-titre 2</h3>
-        <p>Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt
-            tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros
-            faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed
-            consequat, leo eget bibendum sodales, augue velit cursus nunc,</p> <a href="#">Lien vers une autre
+        <p class="acc-titre">Titre 4</p>
+        <p class="acc-text">Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+            metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur
+            ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,
+            sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+        <p class="acc-titre">Titre 5</p>
+        <p class="acc-text">Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante
+            tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci
+            eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+            Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p> <a href="#">Lien vers une autre
         page</a>
-        <h2>Sous-titre 3</h2>
-        <p>Cras commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur pede. Fusce
-            tellus odio, dapibus id fermentum quis, suscipit id erat. Nullam quis ante. Etiam sit amet orci eget
-            eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed
-            consequat, leo eget bibendum sodales, augue velit cursus nunc,</p> <span class="span">Texte en
+        <p class="acc-titre">Titre 6</p>
+        <p class="acc-text">Cras commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur
+            pede. Fusce tellus odio, dapibus id fermentum quis, suscipit id erat. Nullam quis ante. Etiam sit amet orci
+            eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+            Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p> <span class="span">Texte en
                 span</span>
         <button class="btn-submit">Soumettre</button>
     </div>

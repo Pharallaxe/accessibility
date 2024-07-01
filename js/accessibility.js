@@ -5,9 +5,12 @@
 // Fonction pour créer les objets CssSimpleProperty
 function createCssSimpleProperties(cssProperties) {
     cssProperties.forEach(property => {
-        new CssSimpleProperty(property[0], property[1], property[2],
-        )
+        new CssSimpleProperty(property[0], property[1], property[2],)
     });
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 /**
@@ -29,13 +32,14 @@ class Config {
 }
 
 
-const CSS_PROPERTIES = [
-    ["--font-size",         2,   "px"], // fontSize{In-Decrease}Button
-    ["--line-height",     0.1,     ""], // lineHeight{In-Decrease}Button
-    ["--letter-spacing", 0.05,   "em"], // letterSpacing{In-Decrease}Button
-    ["--word-spacing",    0.1,   "em"], // wordSpacing{In-Decrease}Button
-    ["--margin",            5,   "px"], // margin{In-Decrease}Button
-    ["--padding",            5,   "px"], // margin{In-Decrease}Button
+const CSS_PROPERTIES = [["--font-size-title", 2, "px"], // fontSizeTitle{In-Decrease}Button
+    ["--font-size-text", 2, "px"], // fontSizeText{In-Decrease}Button
+    ["--line-height", 0.1, ""], // lineHeight{In-Decrease}Button
+    ["--letter-spacing", 0.05, "em"], // letterSpacing{In-Decrease}Button
+    ["--word-spacing", 0.1, "em"], // wordSpacing{In-Decrease}Button
+    ["--margin", 5, "px"], // margin{In-Decrease}Button
+    ["--padding", 5, "px"], // padding{In-Decrease}Button
+    ["--border-radius", 4, "px"], // borderRadius{In-Decrease}Button
 ];
 
 
@@ -71,7 +75,7 @@ class CssProperty {
 }
 
 class CssSimpleProperty extends CssProperty {
-        #value;
+    #value;
     #unit;
     #delayAnimation;
     #classAnimation;
@@ -126,12 +130,10 @@ class CssSimpleProperty extends CssProperty {
         const parts = cssProperty.split('-').slice(2);
 
         // Construire le préfixe en camelCase.
-        const buttonPrefix =
-            parts[0] +
-            parts
-                .slice(1)
-                .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-                .join('');
+        const buttonPrefix = parts[0] + parts
+            .slice(1)
+            .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+            .join('');
 
         this.setDecreaseButton(`#${buttonPrefix}DecreaseButton`);
         this.setIncreaseButton(`#${buttonPrefix}IncreaseButton`);
@@ -165,9 +167,10 @@ class CssSimpleProperty extends CssProperty {
         const rootElement = document.documentElement;
         const currentRootValue = parseFloat(getComputedStyle(rootElement)
             .getPropertyValue(this.getPropertyName()));
-        const newPropertyValue = `${currentRootValue + adjustmentValue}${this.getUnit()}`;
-        rootElement.style.setProperty(this.getPropertyName(), newPropertyValue);
-        saveAccessibilitySettings(this.getPropertyName(), newPropertyValue);
+        const newPropertyValue = currentRootValue + adjustmentValue;
+        const newPropertyValueWithUnit = `${newPropertyValue}${this.getUnit()}`;
+        rootElement.style.setProperty(this.getPropertyName(), newPropertyValueWithUnit);
+        saveAccessibilitySettings(this.getPropertyName(), newPropertyValueWithUnit);
     }
 }
 
@@ -179,17 +182,7 @@ class FontFamily {
     constructor() {
         this.#propertyName = "--font-family";
         this.#fontFamilySelect = $("#fontFamilySelect");
-        this.#fontFamilies = [
-            "Times New Roman",
-            "Arial",
-            "Verdana",
-            "Georgia",
-            "Courier New",
-            "Roboto",
-            "Comic Sans MS",
-            "Ms Gothic",
-            "Garamond",
-        ];
+        this.#fontFamilies = ["Times New Roman", "Arial", "Verdana", "Georgia", "Courier New", "Roboto", "Comic Sans MS", "Ms Gothic", "Garamond",];
     }
 
     getFontFamilySelect() {
@@ -246,6 +239,71 @@ class FontFamily {
     }
 }
 
+class FloatingElements {
+    #height;
+    #backgroundColor;
+    #opacity;
+    #readGuideBottom;
+    #readGuideTop;
+
+    constructor(height, backgroundColor, opacity) {
+        this.#height = height;
+        this.#opacity = opacity;
+        this.#backgroundColor = this.createBackgroundColor(backgroundColor);
+        this.#readGuideBottom = this.createReadGuide("bottom");
+        this.#readGuideTop = this.createReadGuide("top");
+        this.addEventListeners();
+    }
+
+    getReadGuideBottom() { return this.#readGuideBottom;}
+    getReadGuideTop() { return this.#readGuideTop;}
+    getHeight() { return this.#height;}
+    getBackgroundColor() { return this.#backgroundColor;}
+    getOpacity() { return this.#opacity; }
+
+    createBackgroundColor(backgroundColor) {
+        const r = parseInt(backgroundColor.slice(1, 3), 16);
+        const g = parseInt(backgroundColor.slice(3, 5), 16);
+        const b = parseInt(backgroundColor.slice(5, 7), 16);
+        const hetToRGB =  `${r}, ${g}, ${b}`;
+        console.log(`rgba(${hetToRGB}, ${this.getOpacity()})`)
+        return `rgba(${hetToRGB}, ${this.getOpacity()})`;
+    }
+
+
+    createReadGuide(type) {
+        let guideElement = document.createElement("div");
+        guideElement.id = "readGuide" + capitalizeFirstLetter(type);
+        guideElement.style.position = "fixed";
+        guideElement.style.width = "100%";
+        guideElement.style.height = "100%";
+        guideElement.style.left = "0";
+        guideElement.style.backgroundColor = this.getBackgroundColor();
+        guideElement.style.display = "block";
+        guideElement.style.zIndex = "9999";
+        $("#readGuideContainer").appendChild(guideElement);
+        return guideElement;
+    }
+
+    addEventListeners() {
+        $("#readGuideButton").addEventListener("click", () => {
+            $("#readGuideContainer").classList.toggle("remove-none");
+        });
+
+        document.addEventListener("mousemove", (event) => {
+            const middleHeight = this.getHeight() / 2;
+            this.getReadGuideBottom().style.top = `${event.clientY + this.getHeight() / 2}px`;
+            this.getReadGuideTop().style.bottom = `${window.innerHeight - event.clientY + this.getHeight() / 2}px`;
+        });
+    }
+}
+
+function createCssSelectProperties(accessibilitySettings) {
+    const fontFamilySelect = new FontFamily();
+    fontFamilySelect.initialize();
+    fontFamilySelect.createFontFamilyOptions(accessibilitySettings);
+}
+
 /*********************************************************************************
  * PARTIE ENREGISTREMENT
  *********************************************************************************/
@@ -263,15 +321,23 @@ function readAccessibilitySettings() {
         document.documentElement.style.setProperty(property, value);
     }
 
-    // Gérer la création du panel font-family
-    if (Config.accessibilityPanel) {
 
-        createCssSimpleProperties(CSS_PROPERTIES);
+    if (!Config.accessibilityPanel) return;
 
-        const fontFamilySelect = new FontFamily();
-        fontFamilySelect.initialize()
-        fontFamilySelect.createFontFamilyOptions(accessibilitySettings);
-    }
+    // Créer le comportement des propriétés css simple à valeur
+    createCssSimpleProperties(CSS_PROPERTIES);
+
+    // Créer le comportement des selects
+    createCssSelectProperties(accessibilitySettings)
+
+    // Créer le comportement du reset
+    $("#resetButton").addEventListener("click", () => {
+        localStorage.removeItem(Config.accessibilityStorageName);
+        location.reload();
+    });
+
+    new FloatingElements(100, "#000000", 0.6);
+
 }
 
 readAccessibilitySettings();
