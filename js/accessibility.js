@@ -182,7 +182,7 @@ class FontFamily {
     constructor() {
         this.#propertyName = "--font-family";
         this.#fontFamilySelect = $("#fontFamilySelect");
-        this.#fontFamilies = ["Times New Roman", "Arial", "Verdana", "Georgia", "Courier New", "Roboto", "Comic Sans MS", "Ms Gothic", "Garamond",];
+        this.#fontFamilies = ["Times \n\tNew \nRoman", "Arial", "Verdana", "Georgia", "Courier \nNew", "Roboto", "Comic Sans MS", "Ms Gothic", "Garamond",];
     }
 
     getFontFamilySelect() {
@@ -228,6 +228,7 @@ class FontFamily {
             const option = document.createElement("option");
             option.value = fontFamily;
             option.text = fontFamily;
+
             if (fontFamily === currentFontFamily) {
                 option.selected = true;
             }
@@ -236,6 +237,72 @@ class FontFamily {
         });
 
         this.getFontFamilySelect().style.fontFamily = currentFontFamily;
+    }
+}
+
+class BackgroundColor {
+    #backgroundColorSelect;
+    #propertyName;
+    #backgroundColors;
+
+    constructor() {
+        this.#propertyName = "--font-family";
+        this.#backgroundColorSelect = $("#backgroundColorSelect");
+        this.#backgroundColors = ["blue", "green", "purple", "red", "black", "yellow"];
+    }
+
+    getBackgroundColorSelect() {
+        return this.#backgroundColorSelect
+    }
+
+    getPropertyName() {
+        return this.#propertyName
+    }
+
+    getBackgroundColors() {
+        return this.#backgroundColors
+    }
+
+    /**
+     * Initialise l'événement 'change' sur le select de la famille de polices.
+     * Lorsque l'utilisateur sélectionne une nouvelle famille de polices :
+     * - La valeur du select est appliquée à sa propre police de caractères pour un aperçu en temps réel
+     * - La propriété CSS "--font-family" est mise à jour avec la nouvelle valeur
+     * - Les paramètres d'accessibilité sont enregistrés dans le localStorage avec la nouvelle famille de polices
+     */
+    initialize() {
+        this.getBackgroundColorSelect().addEventListener("change", () => {
+            const selectedBackgroundColor = this.getBackgroundColorSelect().value;
+            this.getBackgroundColorSelect().style.backgroundColor= this.getBackgroundColorSelect().value;
+            document.documentElement.style.setProperty(this.getPropertyName(), selectedBackgroundColor);
+            saveAccessibilitySettings(this.getPropertyName(), selectedBackgroundColor);
+        });
+    }
+
+    /**
+     * Crée les options du select de la famille de polices et sélectionne l'option correspondant
+     * à la valeur actuelle.
+     */
+    createBackgroundColorOptions(accessibilitySettings) {
+        const currentBacgroundColor = accessibilitySettings[this.getPropertyName()] || this.getBackgroundColors()[0];
+
+        // Supprimer les options existantes
+        this.getBackgroundColorSelect().innerHTML = "";
+
+        // Créer les options pour chaque famille de polices
+        this.getBackgroundColors().forEach(backgroundColor => {
+            const option = document.createElement("option");
+            option.value = backgroundColor;
+            option.text = backgroundColor;
+
+            if (backgroundColor === currentBacgroundColor) {
+                option.selected = true;
+            }
+            option.style.backgroundColor = backgroundColor;
+            this.getBackgroundColorSelect().add(option);
+        });
+
+        this.getBackgroundColorSelect().style.backgroundColor = currentBacgroundColor;
     }
 }
 
@@ -302,6 +369,10 @@ function createCssSelectProperties(accessibilitySettings) {
     const fontFamilySelect = new FontFamily();
     fontFamilySelect.initialize();
     fontFamilySelect.createFontFamilyOptions(accessibilitySettings);
+
+    const backgroundColorSelect = new BackgroundColor();
+    backgroundColorSelect.initialize();
+    backgroundColorSelect.createBackgroundColorOptions(accessibilitySettings);
 }
 
 /*********************************************************************************

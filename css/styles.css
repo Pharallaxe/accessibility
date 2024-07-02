@@ -194,9 +194,18 @@ body {
 }
 
 .panel select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+.panel option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .panel button.animate {
