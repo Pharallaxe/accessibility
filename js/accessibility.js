@@ -536,7 +536,7 @@ function cursor(value) {
         document.addEventListener('mousemove', (e) => {
             console.log(e.clientY, e.clientX)
             if (cursor.style.background.includes("pen")) {
-                cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 35}px)`;
+                cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 43}px)`;
                 
             }
             else {
