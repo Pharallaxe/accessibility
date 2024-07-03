@@ -454,12 +454,12 @@ function createCssSimpleProperties(properties) {
 
 
 
-export function cursor(value) {
+function cursor(value) {
     value = parseInt(value);
 
     // Modifier l'url du background du curseur
     function handleMouse(type) {
-        cursor.style.background = `url('img/icones/cursor-${type}-${color}.svg')`;
+        cursor.style.background = `url('img/cursor-${type}-${color}.svg')`;
         cursor.style.backgroundSize = "100% 100%";
     }
 
@@ -521,7 +521,7 @@ export function cursor(value) {
     // Traiter le cas où l'on a un curseur blanc ou noir
     if (value === 0 || value === 1) {
         // Changer le curseur
-        cursor.style.background = `url('./../../img/icones/cursor-hand-${color}.svg')`;
+        cursor.style.background = `url('./img/cursor-hand-${color}.svg')`;
         cursor.style.backgroundSize = "100% 100%";
 
         // Afficher le curseur et masquer le curseur du body
@@ -534,8 +534,10 @@ export function cursor(value) {
 
         // Ajouter l'eventListener pour un mousemove
         document.addEventListener('mousemove', (e) => {
+            console.log(e.clientY, e.clientX)
             if (cursor.style.background.includes("pen")) {
                 cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 35}px)`;
+                
             }
             else {
                 cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY}px)`;
@@ -595,6 +597,9 @@ function readAccessibilitySettings() {
     for (const category in accessibilitySettings) {
         for (const [property, value] of Object.entries(accessibilitySettings[category])) {
             document.documentElement.style.setProperty(property, value);
+
+            if (property === "--cursor-style") cursor(value);
+
         }
     }
 
@@ -613,6 +618,24 @@ function readAccessibilitySettings() {
         localStorage.removeItem(Config.accessibilityStorageName);
         location.reload();
     });
+
+    // Ajouter un écouteur d'événement sur le changement de sélection
+    $("#cursorSelect").addEventListener("change", function () {
+        // Récupérer la valeur sélectionnée
+        const selectedValue = this.value;
+
+        // Faire quelque chose avec la valeur récupérée
+        console.log("Valeur sélectionnée :", selectedValue);
+
+        // Appeler la fonction cursor avec la valeur récupérée
+        cursor(selectedValue);
+
+        saveAccessibilitySettings("range", "--cursor-style", selectedValue);
+
+    });
+
+
+
 
     read.addEventListeners();
 }

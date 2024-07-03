@@ -8,6 +8,10 @@
     margin: 0;
 }
 
+a {
+    cursor: none;
+}
+
 /****************************
  * Mise en page menu
  ****************************/
@@ -51,9 +55,11 @@
     background-color: #555;
 }
 
-body {
+.body {
+    
     margin: 0;
-    padding: 80px 20px 20px; /* Espace pour le menu fixe en haut */
+    padding: 80px 20px 20px;
+    /* Espace pour le menu fixe en haut */
     /*background-color: #f8f9fa;*/
     display: flex;
     flex-direction: column;
@@ -107,7 +113,8 @@ body {
     }
 
     .panel {
-        width: calc(50% - 10px); /* Deux panels de largeur */
+        width: calc(50% - 10px);
+        /* Deux panels de largeur */
     }
 
     .accessibility {
@@ -123,7 +130,8 @@ body {
     }
 
     .panel {
-        width: calc(32% - 10px); /* Deux panels de largeur */
+        width: calc(32% - 10px);
+        /* Deux panels de largeur */
     }
 
     .accessibility {
@@ -135,13 +143,14 @@ body {
 
 /* Mode desktop */
 @media screen and (min-width: 1024px) {
-    body {
+    .body {
         flex-direction: row;
         justify-content: center;
         align-items: flex-start;
     }
 
-    .accessibility, .text {
+    .accessibility,
+    .text {
         width: calc(50% - 20px);
     }
 
@@ -154,7 +163,8 @@ body {
     }
 
     .panel {
-        width: calc(50% - 10px); /* Maintient deux panels de largeur */
+        width: calc(50% - 10px);
+        /* Maintient deux panels de largeur */
     }
 }
 
@@ -168,7 +178,8 @@ body {
     display: flex;
 }
 
-.panel button, .panel select {
+.panel button,
+.panel select {
     background-color: rgb(0, 128, 0);
     color: white;
     border: none;
@@ -176,24 +187,24 @@ body {
     text-align: center;
     font-size: 16px;
     margin: 0 5px;
-    cursor: pointer;
+    cursor: none;
     border-radius: 5px;
 }
 
 #backgroundColorSelect {
     background-color: var(--background-color);
     color: black;
-    font-weight : bold;
+    font-weight: bold;
 }
 
 #textColorSelect {
     background-color: white;
     color: var(--text-color);
-    font-weight : bold;
+    font-weight: bold;
 }
 
 #textAlignSelect {
-    font-weight : bold;
+    font-weight: bold;
 }
 
 .panel button {
@@ -228,9 +239,9 @@ body {
     --font-family: "Montserrat";
     --background-color: "#f8f9fa";
     --text-color: "black";
-    --text-align : left;
+    --text-align: left;
 
-    --read-guide-display : none;
+    --read-guide-display: none;
 
     /*--text-100: hsl(0, 60%, 10%);*/
     /*--text-90: hsl(0, 60%, 20%);*/
@@ -289,4 +300,46 @@ body {
 
 #readGuideContainer {
     display: var(--read-guide-display);
+}
+
+
+#cursor {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    background-size: 100% 100%;
+    z-index: 20;
+}
+
+#cursor.cursor-hidden {
+    display: none;
+}
+
+#cursor.cursor-white {
+    background: url("./img/cursor-arrow-white.svg");
+    background-size: 100% 100%;
+    z-index: 200;
+}
+
+#cursor.cursor-black {
+    background: url("./img/cursor-arrow-black.svg");
+    background-size: 100% 100%;
+    z-index: 200;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-pointer.cursor-none {
+    cursor: none;
+}
+
+.cursor-text {
+    cursor: text;
+}
+
+.cursor-text.cursor-none {
+    cursor: none;
 }
