@@ -51,19 +51,14 @@
     background-color: #555;
 }
 
-/****************************
- * Mise en page générale 
- ****************************/
-
 body {
     margin: 0;
     padding: 80px 20px 20px; /* Espace pour le menu fixe en haut */
-    background-color: #f1f1f1;
+    /*background-color: #f8f9fa;*/
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-
 }
 
 .accessibility {
@@ -71,14 +66,18 @@ body {
     max-width: 1200px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 20px;
 }
 
 .text {
     background-color: antiquewhite;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.exemple {
+    padding: 10px;
 }
 
 .panel {
@@ -102,7 +101,7 @@ body {
 }
 
 /* Mode tablette */
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 500px) {
     .accessibility {
         flex-direction: column;
     }
@@ -124,7 +123,7 @@ body {
     }
 
     .panel {
-        width: calc(33% - 10px); /* Deux panels de largeur */
+        width: calc(32% - 10px); /* Deux panels de largeur */
     }
 
     .accessibility {
@@ -133,7 +132,6 @@ body {
         justify-content: space-between;
     }
 }
-
 
 /* Mode desktop */
 @media screen and (min-width: 1024px) {
@@ -144,7 +142,7 @@ body {
     }
 
     .accessibility, .text {
-        width: calc(50% - 10px);
+        width: calc(50% - 20px);
     }
 
     .accessibility {
@@ -156,7 +154,7 @@ body {
     }
 
     .panel {
-        width: calc(33% - 10px); /* Maintient deux panels de largeur */
+        width: calc(50% - 10px); /* Maintient deux panels de largeur */
     }
 }
 
@@ -171,7 +169,7 @@ body {
 }
 
 .panel button, .panel select {
-    background-color: rgb(4, 64, 4);
+    background-color: rgb(0, 128, 0);
     color: white;
     border: none;
     padding: 5px 10px;
@@ -182,30 +180,31 @@ body {
     border-radius: 5px;
 }
 
-.panel button, .panel select {
-    font-size: 20px;
+#backgroundColorSelect {
+    background-color: var(--background-color);
+    color: black;
+    font-weight : bold;
+}
+
+#textColorSelect {
+    background-color: white;
+    color: var(--text-color);
+    font-weight : bold;
+}
+
+#textAlignSelect {
+    font-weight : bold;
 }
 
 .panel button {
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
 }
 
 .panel select {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-}
-
-.panel option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .panel button.animate {
@@ -218,14 +217,20 @@ body {
 
 :root {
     --font-size-title: 18px;
-    --font-size-text: 14px;
-    --line-height: 1.1;
+    --font-size-text: 15px;
+    --line-height: 1.5;
     --letter-spacing: 0;
-    --font-family: "Lucida Sans";
     --word-spacing: 0.25em;
     --margin: 5px;
     --padding: 10px;
     --border-radius: 5px;
+
+    --font-family: "Montserrat";
+    --background-color: "#f8f9fa";
+    --text-color: "black";
+    --text-align : left;
+
+    --read-guide-display : none;
 
     /*--text-100: hsl(0, 60%, 10%);*/
     /*--text-90: hsl(0, 60%, 20%);*/
@@ -249,7 +254,19 @@ body {
     letter-spacing: var(--letter-spacing);
     line-height: var(--line-height);
     word-spacing: var(--word-spacing);
-    font-family: var(--font-family), serif;
+    font-family: var(--font-family), sans-serif;
+    color: var(--text-color);
+}
+
+.acc-test {
+    font-size: var(--font-size-text);
+    letter-spacing: var(--letter-spacing);
+    line-height: var(--line-height);
+    word-spacing: var(--word-spacing);
+    font-family: var(--font-family), sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+
 }
 
 .acc-titre {
@@ -260,7 +277,6 @@ body {
     font-weight: bold;
     text-decoration: underline;
     background-color: palevioletred;
-
 }
 
 .acc-text {
@@ -268,15 +284,9 @@ body {
     padding: var(--padding);
     border-radius: var(--border-radius);
     background-color: paleturquoise;
+    text-align: var(--text-align);
 }
 
 #readGuideContainer {
-    display: none;
+    display: var(--read-guide-display);
 }
-
-#readGuideContainer.remove-none {
-    display: block;
-}
-
-
-
