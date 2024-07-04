@@ -454,136 +454,124 @@ function createCssSimpleProperties(properties) {
 
 
 
-function cursor(value) {
-    value = parseInt(value);
-
-    // Modifier l'url du background du curseur
-    function handleMouse(type) {
-        cursor.style.background = `url('img/cursor-${type}-${color}.svg')`;
-        cursor.style.backgroundSize = "100% 100%";
+class CustomCursor {
+    constructor() {
+        this.cursor = $('#cursor');
+        this.body = $("#cursor-body");
+        this.allHandTargets = $All(".cursor-pointer");
+        this.allPenTargets = $All(".cursor-text");
+        this.color = '';
     }
 
-    function handleHandMouseEnter() { handleMouse("hand"); }
-    function handleMouseLeave() { handleMouse("arrow"); }
-    function handlePenMouseEnter() { handleMouse("pen"); }
+    init(value) {
+        value = parseInt(value);
+        this.cursor.classList.remove("cursor-white", "cursor-black");
+        this.color = ["white", "black"][value];
 
-    function addEventListeners() {
-        if (allHandTargets) {
-            allHandTargets.forEach(target => {
-                target.classList.add("cursor-none");
-                target.addEventListener('mouseenter', () => handleHandMouseEnter());
-                target.addEventListener('mouseleave', () => handleMouseLeave());
-            });
-        }
-
-        if (allPenTargets) {
-            allPenTargets.forEach(target => {
-                target.classList.add("cursor-none");
-                target.addEventListener('mouseenter', () => handlePenMouseEnter());
-                target.addEventListener('mouseleave', () => handleMouseLeave());
-            });
+        if (value === 0 || value === 1) {
+            this.setupCustomCursor();
+        } else {
+            this.resetToDefaultCursor();
         }
     }
 
-    function removeEventListeners() {
-        if (allHandTargets) {
-            allHandTargets.forEach(target => {
+    setupCustomCursor() {
+        this.cursor.style.background = `url('./img/cursor-hand-${this.color}.svg')`;
+        this.cursor.style.backgroundSize = "100% 100%";
+        this.cursor.classList.remove("cursor-hidden");
+        this.cursor.classList.add(`cursor-${this.color}`);
+        this.body.style.cursor = "none";
+
+        this.addEventListeners();
+        this.addMouseMoveListener();
+        this.addScrollListener();
+    }
+
+    resetToDefaultCursor() {
+        this.body.style.cursor = "auto";
+        this.cursor.classList.add("cursor-hidden");
+        this.removeEventListeners();
+        this.resetTargetCursors();
+    }
+
+    handleMouse(type) {
+        this.cursor.style.background = `url('img/cursor-${type}-${this.color}.svg')`;
+        this.cursor.style.backgroundSize = "100% 100%";
+    }
+
+    handleHandMouseEnter() { this.handleMouse("hand"); }
+    handleMouseLeave() { this.handleMouse("arrow"); }
+    handlePenMouseEnter() { this.handleMouse("pen"); }
+
+    addEventListeners() {
+        this.addListenersToTargets(this.allHandTargets, this.handleHandMouseEnter.bind(this), this.handleMouseLeave.bind(this));
+        this.addListenersToTargets(this.allPenTargets, this.handlePenMouseEnter.bind(this), this.handleMouseLeave.bind(this));
+    }
+
+    addListenersToTargets(targets, enterHandler, leaveHandler) {
+        if (targets) {
+            targets.forEach(target => {
+                target.classList.add("cursor-none");
+                target.addEventListener('mouseenter', enterHandler);
+                target.addEventListener('mouseleave', leaveHandler);
+            });
+        }
+    }
+
+    removeEventListeners() {
+        this.removeListenersFromTargets(this.allHandTargets);
+        this.removeListenersFromTargets(this.allPenTargets);
+    }
+
+    removeListenersFromTargets(targets) {
+        if (targets) {
+            targets.forEach(target => {
                 target.classList.remove("cursor-none");
-                target.addEventListener('mouseenter', () => handleHandMouseEnter());
-                target.addEventListener('mouseleave', () => handleMouseLeave());
-            });
-        }
-
-        if (allPenTargets) {
-            allPenTargets.forEach(target => {
-                target.classList.add("cursor-none");
-                target.addEventListener('mouseenter', () => handlePenMouseEnter());
-                target.addEventListener('mouseleave', () => handleMouseLeave());
             });
         }
     }
 
-    // Sélectionner le curseur qui se trouve dans le fichier header-gen.php
-    const cursor = $('#cursor');
-
-    // Selectionner l'élément body
-    const body = $("#cursor-body");
-
-    // Selectionner tous les éléments qui ont un cursor: pointer
-    const allHandTargets = $All(".cursor-pointer");
-
-    // Selectionner tous les éléments qui ont un cursor : text
-    const allPenTargets = $All(".cursor-text");
-
-    cursor.classList.remove("cursor-white", "cursor-black");
-    const color = ["white", "black"][value];
-
-    // Traiter le cas où l'on a un curseur blanc ou noir
-    if (value === 0 || value === 1) {
-        // Changer le curseur
-        cursor.style.background = `url('./img/cursor-hand-${color}.svg')`;
-        cursor.style.backgroundSize = "100% 100%";
-
-        // Afficher le curseur et masquer le curseur du body
-        cursor.classList.remove("cursor-hidden");
-        cursor.classList.add(`cursor-${color}`);
-        body.style.cursor = "none";
-
-        // Ajouter les eventListeners requis
-        addEventListeners();
-
-        // Ajouter l'eventListener pour un mousemove
+    addMouseMoveListener() {
         document.addEventListener('mousemove', (e) => {
-            console.log(e.clientY, e.clientX)
-            if (cursor.style.background.includes("pen")) {
-                cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 43}px)`;
-                
-            }
-            else {
-                cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY}px)`;
+            console.log(e.clientY, e.clientX);
+            if (this.cursor.style.background.includes("pen")) {
+                this.cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 43}px)`;
+            } else {
+                this.cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY}px)`;
             }
         });
+    }
 
-        // Ajouter l'eventListener pour un scroll
+    addScrollListener() {
         document.addEventListener('scroll', () => {
-            handleMouseLeave();
-            const x = cursor.getBoundingClientRect().left + cursor.getBoundingClientRect().width / 2;
-            const y = cursor.getBoundingClientRect().top + cursor.getBoundingClientRect().height / 2;
-            console.log(x, y)
+            this.handleMouseLeave();
+            const x = this.cursor.getBoundingClientRect().left + this.cursor.getBoundingClientRect().width / 2;
+            const y = this.cursor.getBoundingClientRect().top + this.cursor.getBoundingClientRect().height / 2;
+            console.log(x, y);
             const elementUnderMouse = document.elementFromPoint(x, y);
 
             if (elementUnderMouse.classList.contains('cursor-pointer')) {
-                handleHandMouseEnter();
+                this.handleHandMouseEnter();
             } else if (elementUnderMouse.classList.contains('cursor-text')) {
-                handlePenMouseEnter();
+                this.handlePenMouseEnter();
             }
         });
     }
-    // Traiter le cas pour un cuseur normal
-    else {
-        // Enlever le curseur personnalisé
-        body.style.cursor = "auto";
-        cursor.classList.add("cursor-hidden");
 
-        // Supprimer les eventListeners devenus inutiles
-        removeEventListeners();
+    resetTargetCursors() {
+        this.resetCursorForTargets(this.allHandTargets);
+        this.resetCursorForTargets(this.allPenTargets);
+    }
 
-        // Remettre en place le curseur original sur les zones qui doivent avoir un cursor:pointer
-        if (allHandTargets) {
-            allHandTargets.forEach(target => {
-                target.classList.remove("cursor-none");
-            });
-        }
-
-        // Remettre en place le curseur original sur les zones qui doivent avoir un cursor:text
-        // => Ne pas oublier la mise en page des cursor-text pour les labels dans FormLabel
-        if (allPenTargets) {
-            allPenTargets.forEach(target => {
+    resetCursorForTargets(targets) {
+        if (targets) {
+            targets.forEach(target => {
                 target.classList.remove("cursor-none");
             });
         }
     }
 }
+
 
 /**
  * Lit les paramètres d'accessibilité depuis le localStorage et met à jour les styles en conséquence.
@@ -592,13 +580,16 @@ function cursor(value) {
  */
 function readAccessibilitySettings() {
     const accessibilitySettings = JSON.parse(localStorage.getItem(Config.accessibilityStorageName)) || {};
+    let customCursor = new CustomCursor();
 
     // Mettre à jour les variables CSS avec les valeurs enregistrées
     for (const category in accessibilitySettings) {
         for (const [property, value] of Object.entries(accessibilitySettings[category])) {
             document.documentElement.style.setProperty(property, value);
 
-            if (property === "--cursor-style") cursor(value);
+            if (property === "--cursor-style") {
+                customCursor.init(value); // où 'value' est 0, 1 ou une autre valeur
+            }
 
         }
     }
@@ -628,14 +619,11 @@ function readAccessibilitySettings() {
         console.log("Valeur sélectionnée :", selectedValue);
 
         // Appeler la fonction cursor avec la valeur récupérée
-        cursor(selectedValue);
+        customCursor.init(selectedValue); // où 'value' est 0, 1 ou une autre valeur
 
         saveAccessibilitySettings("range", "--cursor-style", selectedValue);
 
     });
-
-
-
 
     read.addEventListeners();
 }
