@@ -1,12 +1,14 @@
-const { join } = require("node:path");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/app.js',
     output: {
-        filename: 'bundle.js',
-        path: join(__dirname, 'dist')
+        filename: 'app.js',
+        path: path.resolve(__dirname, 'dist'),
     },
     watch: true,
     mode: 'development',
@@ -18,24 +20,40 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                    presets: ['@babel/preset-env']
-                }
+                    presets: ['@babel/preset-env'],
+                },
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                ],
             },
             {
-                test: /\.(svg)$/,
-                use: ['file-loader']
-            }
-        ]
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'img/[name][ext]',
+                },
+            },
+        ],
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/img', to: 'img' }
+            ]
+        })
+    ],
     optimization: {
         minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
-            new TerserPlugin()
-        ]
-    }
+            new TerserPlugin(),
+        ],
+    },
 };

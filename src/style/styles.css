@@ -316,13 +316,13 @@ a {
 }
 
 #cursor.cursor-white {
-    background: url("./img/cursor-arrow-white.svg");
+    background: url("../img/cursor-arrow-white.svg");
     background-size: 100% 100%;
     z-index: 200;
 }
 
 #cursor.cursor-black {
-    background: url("./img/cursor-arrow-black.svg");
+    background: url("../img/cursor-arrow-black.svg");
     background-size: 100% 100%;
     z-index: 200;
 }
