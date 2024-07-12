@@ -1,4 +1,4 @@
-# Bibliothèque d'algorithmes
+# Bibliothèque d'accssibilité
 
 ![Illustration de l'auteur](./img/pharallaxe.png)
 
